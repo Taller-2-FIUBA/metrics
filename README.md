@@ -15,11 +15,12 @@ Labels are used to add another dimension.
 ## Generic HTTP response
 
 ```json
-{
-  "label": {
-    "count": 30
-  }
-}
+[
+    {
+        "label": "total",
+        "count": 30
+    }
+]
 ```
 
 If metric has not label `total` will be used.
@@ -102,34 +103,17 @@ The label is the user name.
 
 ## HTTP API response
 
-### trainings_new_count
+### user_blocked_count
 
-GET to `/metrics?name=trainings_new_count`
-
-```json
-{
-  "total": {
-    "count": 30
-  }
-}
-```
-
-### user_by_region_count
-
-GET to `/metrics?name=user_by_region_count`
+GET to `/metrics?name=user_blocked_count`
 
 ```json
-{
-  "belgrano": {
-   "count": 1
-  },
-  "palermo": {
-   "count": 2
-  },
-  "lugano": {
-   "count": 3
-  }
-}
+[
+    {
+        "label": "total",
+        "count": 1
+    }
+]
 ```
 
 ### user_login_count
@@ -137,14 +121,33 @@ GET to `/metrics?name=user_by_region_count`
 GET to `/metrics?name=user_login_count`
 
 ```json
-{
-  "using_email_password": {
-   "count": 5
-  },
-  "using_idp": {
-   "count": 0
-  }
-}
+[
+    {
+        "label": "using_email_password",
+        "count": 5
+    },
+    {
+        "label": "using_idp",
+        "count": 0
+    }
+]
+```
+
+### user_login_count
+
+GET to `/metrics?name=user_login_count`
+
+```json
+[
+    {
+        "label": "using_email_password",
+        "count": 5
+    },
+    {
+        "label": "using_idp",
+        "count": 0
+    }
+]
 ```
 
 ## Virtual environment
@@ -171,24 +174,11 @@ uvicorn main:app --reload
 tox
 ```
 
-## Docker
+## Local K8s
 
 Building docker image:
 
 ```bash
-docker build --tag IMAGE_NAME .
+docker build . --tag fiufit/metrics:latest
+k3d image import fiufit/metrics:latest --cluster=taller2
 ```
-
-Where `IMAGE_NAME` is a name to identify the image later.
-
-Then run the container:
-
-```bash
-docker run --rm -p 8080:80 --name CONTAINER_NAME IMAGE_NAME
-```
-
-Where `IMAGE_NAME` is the name chosen in the previous step and `CONTAINER_NAME`
-is a name to identify the container running.
-Notice `--rm` tells docker to remove the container after exists, and
-`-p 8080:80` maps the port 80 in the container to the port 8080 in the host.
-
