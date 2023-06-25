@@ -1,4 +1,5 @@
 # pylint: disable= missing-module-docstring, missing-function-docstring
+from unittest.mock import MagicMock, patch
 from fastapi.testclient import TestClient
 from hamcrest import assert_that, greater_than
 from metrics.main import app
@@ -8,10 +9,27 @@ import tests.util.constants as c
 client = TestClient(app)
 
 
-def test_read_main():
-    response = client.get("/")
+@patch("metrics.main.get_connection")
+@patch("metrics.main.get_values")
+def test_get_metric(
+    get_values_mock: MagicMock,
+    get_connection_mock: MagicMock,
+):
+    expected_values = [{"_id": "arm", "count": 33}, {"_id": "leg", "count": 3}]
+    expected_connection = MagicMock()
+    get_values_mock.return_value = expected_values
+    get_connection_mock.return_value = expected_connection
+    response = client.get("/metrics?name=trainings_created_count")
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello World"}
+    assert response.json() == [
+        {"label": "arm", "count": 33}, {"label": "leg", "count": 3}
+    ]
+    get_connection_mock.assert_called_once_with(
+        "mongodb://fiufit:fiufit@cluster.mongodb.net/fiufit"
+    )
+    get_values_mock.assert_called_once_with(
+        expected_connection, "trainings_created_count"
+    )
 
 
 def test_when_getting_swagger_ui_expect_200():
