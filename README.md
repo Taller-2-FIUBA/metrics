@@ -1,5 +1,7 @@
 # metrics
 
+[![codecov](https://codecov.io/gh/Taller-2-FIUBA/metrics/branch/main/graph/badge.svg?token=naVHuDML0R)](https://codecov.io/gh/Taller-2-FIUBA/metrics)
+
 Service to interact with metrics
 
 ## Generic MongoDB document
