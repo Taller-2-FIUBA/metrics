@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: metrics
-        image: marianocinalli/metrics:v0.0.1
+        image: marianocinalli/metrics:v0.0.2
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
