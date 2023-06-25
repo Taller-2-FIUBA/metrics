@@ -7,7 +7,6 @@ metadata:
     app: fiufit
     tier: metrics-microservice
 data:
-  METRICS_DB_DATABASE: "fiufit"
-  METRICS_DB_USER: "backend"
-  METRICS_DB_PASSWORD: $USERS_DB_PASSWORD
-  METRICS_DB_HOST: "dpg-cgno8m8rddl9mmvdaja0-a.oregon-postgres.render.com"
+  METRICS_MONGO_HOST: fiufit.rqnbyme.mongodb.net
+  METRICS_MONGO_DRIVER: mongodb+srv
+  METRICS_MONGO_PASSWORD: $USERS_MONGO_PASSWORD
