@@ -4,16 +4,24 @@ import time
 
 from fastapi import FastAPI, Request
 from fastapi.applications import get_swagger_ui_html
+from fastapi.middleware.cors import CORSMiddleware
 
 import metrics.constants as c
 from metrics.healthcheck import HealthCheckDto
 
 
+logging.basicConfig(encoding="utf-8", level=c.CONFIGURATION.log_level.upper())
 app = FastAPI(
     debug=c.CONFIGURATION.log_level.upper() == "DEBUG",
     openapi_url=c.DOCUMENTATION_URI + "openapi.json",
 )
-logging.basicConfig(encoding="utf-8", level=c.CONFIGURATION.log_level.upper())
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin_regex=c.ORIGIN_REGEX,
+    allow_credentials=True,
+    allow_methods=c.METHODS,
+    allow_headers=['*']
+)
 
 
 @app.get("/")
