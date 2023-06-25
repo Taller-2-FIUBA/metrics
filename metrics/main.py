@@ -1,10 +1,12 @@
 """Requests handlers."""
 import logging
+import time
 
 from fastapi import FastAPI, Request
 from fastapi.applications import get_swagger_ui_html
 
 import metrics.constants as c
+from metrics.healthcheck import HealthCheckDto
 
 
 app = FastAPI(
@@ -30,3 +32,9 @@ async def custom_swagger_ui_html(req: Request):
         openapi_url=openapi_url,
         title="FIU-FIT Metrics",
     )
+
+
+@app.get(c.BASE_URI + "/healthcheck/")
+async def health_check() -> HealthCheckDto:
+    """Check for how long has the service been running."""
+    return HealthCheckDto(uptime=time.time() - c.START)
