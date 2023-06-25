@@ -26,7 +26,7 @@ spec:
         - configMapRef:
             name: metrics-configuration
         ports:
-          - containerPort: 80
+          - containerPort: 8005
             name: http-metrics
         resources:
           limits:

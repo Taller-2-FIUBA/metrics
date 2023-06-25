@@ -1,2 +1,3 @@
 fastapi[all]
 environ-config
+pymongo[srv]

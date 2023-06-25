@@ -1,13 +1,17 @@
 """Requests handlers."""
 import logging
 import time
+from typing import List
 
 from fastapi import FastAPI, Request
 from fastapi.applications import get_swagger_ui_html
 from fastapi.middleware.cors import CORSMiddleware
 
 import metrics.constants as c
+from metrics.dto import MetricDto
 from metrics.healthcheck import HealthCheckDto
+from metrics.hydrator import hydrate
+from metrics.mongodb import get_url, get_connection, get_values
 
 
 logging.basicConfig(encoding="utf-8", level=c.CONFIGURATION.log_level.upper())
@@ -24,11 +28,14 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-async def root():
-    """Greet."""
-    logging.info("Received request to /")
-    return {"message": "Hello World"}
+@app.get(c.BASE_URI, response_model=List[MetricDto])
+async def get_metric(name: str) -> List[MetricDto]:
+    """Get value for a metric name."""
+    logging.info("Returning value for metric %s", name)
+    connection = get_connection(get_url(c.CONFIGURATION))
+    values = get_values(connection, name)
+    logging.debug("Got %s for %s", values, name)
+    return hydrate(values)
 
 
 @app.get(c.DOCUMENTATION_URI, include_in_schema=False)

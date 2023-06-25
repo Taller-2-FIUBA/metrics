@@ -9,4 +9,4 @@ RUN pip install -e .
 
 WORKDIR /user/src/metrics/metrics
 
-ENTRYPOINT [ "uvicorn", "main:app", "--port=80", "--reload" ]
+ENTRYPOINT [ "uvicorn", "main:app", "--port=8005", "--reload" ]

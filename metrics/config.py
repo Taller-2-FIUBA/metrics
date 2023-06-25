@@ -1,5 +1,5 @@
 """Application configuration."""
-from environ import config, var, group
+from environ import bool_var, config, var, group
 
 
 @config(prefix="METRICS")
@@ -8,15 +8,15 @@ class AppConfig:
 
     log_level = var("WARNING")
 
-    @config
-    class DB:
-        """Database configuration."""
+    @config(prefix="MONGO")
+    class Mongo:
+        """MongoDB configuration."""
 
-        driver = var("postgresql")
-        password = var("backend")
-        user = var("backend")
-        host = var("localhost")
-        port = var(5432, converter=int)
-        database = var("postgres")
+        enabled = bool_var(True)
+        driver = var("mongodb")
+        user = var("fiufit")
+        password = var("fiufit")
+        host = var("cluster.mongodb.net")
+        database = var("fiufit")
 
-    db = group(DB)  # type: ignore
+    mongo = group(Mongo)  # type: ignore
