@@ -12,6 +12,18 @@ Service to interact with metrics
 
 Labels are used to add another dimension.
 
+## Generic HTTP response
+
+```json
+{
+  "label": {
+    "count": 30
+  }
+}
+```
+
+If metric has not label `total` will be used.
+
 ## MongoDB documents for metrics by acceptance criteria
 
 ### Trainings
@@ -96,7 +108,9 @@ GET to `/metrics?name=trainings_new_count`
 
 ```json
 {
-  "count": 30
+  "total": {
+    "count": 30
+  }
 }
 ```
 
