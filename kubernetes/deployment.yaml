@@ -57,7 +57,7 @@ spec:
     spec:
       containers:
       - name: metrics-consumer
-        image: marianocinalli/metrics:v0.0.2
+        image: marianocinalli/metrics:v0.0.3
         command: ["python3"]
         args: ["read_from_queue.py"]
         imagePullPolicy: Always
