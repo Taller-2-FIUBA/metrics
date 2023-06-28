@@ -9,6 +9,12 @@ expected_message = (
     "date": "2023-06-24T23:26:45-03:00"}', "utf-8")
 )
 
+single_quotes_message = (
+    bytes("metrics", "utf-8"),
+    bytes("{'metric': 'user_login_count', 'value': 1, 'date': \
+    '28/06/2023 04:20:27', 'label': 'using_email_password'}", "utf-8")
+)
+
 
 @patch("metrics.read_from_queue.BlockingConnectionPool")
 @patch("metrics.read_from_queue.Redis")
@@ -105,6 +111,35 @@ def test_when_saving_message_expect_metrics(
             "label": "Arm",
             "date": "2023-06-24T23:26:45-03:00"
         },
+    )
+
+
+@patch("metrics.read_from_queue.BlockingConnectionPool")
+@patch("metrics.read_from_queue.Redis")
+@patch("metrics.read_from_queue.get_connection")
+@patch("metrics.read_from_queue.add")
+def test_when_message_has_single_quotes_expect_it_in_add(
+    add_mock: MagicMock,
+    get_connection_mock: MagicMock,
+    redis_mock: MagicMock,
+    blocking_connection_pool_mock: MagicMock,
+):
+    expected_client = MagicMock()
+    expected_client.blpop.return_value = single_quotes_message
+    expected_connection = MagicMock()
+    redis_mock.return_value = expected_client
+    get_connection_mock.return_value = expected_connection
+    runner = CliRunner()
+    runner.invoke(read, ["--read-one=True"])
+    blocking_connection_pool_mock.assert_called_once()
+    add_mock.assert_called_once_with(
+        expected_connection,
+        {
+            "metric": "user_login_count",
+            "value": 1,
+            "date": "28/06/2023 04:20:27",
+            "label": "using_email_password"
+        }
     )
 
 

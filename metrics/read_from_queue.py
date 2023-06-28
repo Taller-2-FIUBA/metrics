@@ -36,7 +36,9 @@ def read(read_one: bool):
         message = client.blpop("metrics")
         logging.info("Read message %s", message)
         try:
-            add(connection, loads(message[1].decode('utf-8')))
+            sanitized_message = message[1].decode('utf-8').replace("'", '"')
+            logging.debug("Sanitized message %s", sanitized_message)
+            add(connection, loads(sanitized_message))
             logging.debug("Saved metric in MongoDB.")
         except (SyntaxError, IndexError):
             logging.exception("Cloud not save metric.")
