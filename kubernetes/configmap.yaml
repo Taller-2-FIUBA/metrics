@@ -10,4 +10,4 @@ data:
   METRICS_MONGO_HOST: fiufit.rqnbyme.mongodb.net
   METRICS_MONGO_DRIVER: mongodb+srv
   METRICS_MONGO_PASSWORD: $USERS_MONGO_PASSWORD
-  METRICS_REDIS_HOST: "redis-release-master.taller2-marianocinalli.svc.cluster.local"
+  METRICS_REDIS_HOST: "redis-master.taller2-marianocinalli.svc.cluster.local"
