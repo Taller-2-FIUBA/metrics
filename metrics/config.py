@@ -6,7 +6,7 @@ from environ import bool_var, config, var, group
 class AppConfig:
     """Application configuration values from environment."""
 
-    log_level = var("WARNING")
+    log_level = var("INFO")
 
     @config(prefix="MONGO")
     class Mongo:
@@ -19,4 +19,12 @@ class AppConfig:
         host = var("cluster.mongodb.net")
         database = var("fiufit")
 
+    @config(prefix="REDIS")
+    class Redis:
+        """Redis configuration."""
+
+        host = var("localhost")
+        port = var(6379, converter=int)
+
     mongo = group(Mongo)  # type: ignore
+    redis = group(Redis)  # type: ignore

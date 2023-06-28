@@ -60,3 +60,9 @@ def get_values(connection: MongoClient, name: str) -> List[Dict]:
         }
     ]
     return list(connection.fiufit.metrics.aggregate(pipeline))
+
+
+def add(connection: MongoClient, metric: str):
+    """Edit location for a user. Creates if does not exist."""
+    logging.info("Saving metric %s", metric)
+    connection.fiufit.metrics.insert_one(metric)

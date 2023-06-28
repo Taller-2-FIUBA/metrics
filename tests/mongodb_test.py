@@ -2,6 +2,7 @@
 from unittest.mock import MagicMock, patch
 
 from metrics.mongodb import (
+    add,
     get_url,
     get_connection,
     get_values,
@@ -47,3 +48,10 @@ def test_when_getting_values_expect_pipeline():
     ]
     assert not get_values(connection, "goals_by_user_count")
     aggregate_mock.assert_called_once_with(expected_pipeline)
+
+
+def test_when_adding_metrics_expect_test():
+    insert_one_mock = MagicMock()
+    connection = MagicMock(**{"fiufit.metrics.insert_one": insert_one_mock})
+    add(connection, "test")
+    insert_one_mock.assert_called_once_with("test")

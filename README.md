@@ -27,27 +27,6 @@ If metric has not label `total` will be used.
 
 ## MongoDB documents for metrics by acceptance criteria
 
-### Trainings
-
-- CA 1: Métricas de nuevos entrenamientos
-- CA 2: Métricas de entrenamientos por tipo
-
-```json
-{"metric": "trainings_created_count", "value": 1, "label": "Cardio", "date": "2023-06-24T23:26:45-03:00"}
-{"metric": "trainings_created_count", "value": 1, "label": "Leg", "date": "2023-06-24T23:26:45-03:00"}
-{"metric": "trainings_created_count", "value": 1, "label": "Arm", "date": "2023-06-24T23:26:45-03:00"}
-{"metric": "trainings_created_count", "value": 1, "label": "Chest", "date": "2023-06-24T23:26:45-03:00"}
-{"metric": "trainings_created_count", "value": 1, "label": "Back", "date": "2023-06-24T23:26:45-03:00"}
-{"metric": "trainings_created_count", "value": 1, "label": "Abdomen", "date": "2023-06-24T23:26:45-03:00"}
-```
-
-CA 4: Métricas de contenidos por usuario
-
-```json
-{"metric": "trainings_by_user_count", "value": 1, "label": "my_user", "date": "2023-06-24T23:26:45-03:00"}
-{"metric": "trainings_by_user_count", "value": 1, "label": "my_other_user", "date": "2023-06-24T23:26:45-03:00"}
-```
-
 ### Users
 
 - CA 1: Métricas de nuevos usuarios utilizando mail y contraseña
@@ -85,21 +64,6 @@ CA 4: Métricas de contenidos por usuario
 {"metric": "user_by_region_count", "label": "palermo", "value": 1, "date": "2023-06-24T23:26:45-03:00"}
 {"metric": "user_by_region_count", "label": "lugano", "value": 1, "date": "2023-06-24T23:26:45-03:00"}
 ```
-
-### TBD Goals
-
-CA 4: Métricas de contenidos por usuario
-
-```json
-{"metric": "goals_by_user_count", "value": 1, "label": "my_user", "date": "2023-06-24T23:26:45-03:00"}
-{"metric": "goals_by_user_count", "value": 1, "label": "my_other_user", "date": "2023-06-24T23:26:45-03:00"}
-```
-
-The label is the user name.
-
-### TBD
-
-- CA 3: Métricas de usuarios
 
 ## HTTP API response
 
