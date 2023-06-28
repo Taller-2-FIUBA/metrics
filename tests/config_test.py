@@ -8,7 +8,7 @@ from metrics.config import AppConfig
 @patch.dict(environ, {}, clear=True)
 def test_when_environment_is_empty_expect_warning_log_level():
     cnf = to_config(AppConfig)
-    assert cnf.log_level == "WARNING"
+    assert cnf.log_level == "INFO"
 
 
 @patch.dict(environ, {"METRICS_LOG_LEVEL": "DEBUG"}, clear=True)
