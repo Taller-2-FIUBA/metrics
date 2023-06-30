@@ -11,3 +11,8 @@ data:
   METRICS_MONGO_DRIVER: mongodb+srv
   METRICS_MONGO_PASSWORD: $USERS_MONGO_PASSWORD
   METRICS_REDIS_HOST: "redis-master.taller2-marianocinalli.svc.cluster.local"
+  NEW_RELIC_LICENSE_KEY: $TRAININGS_NEW_RELIC_KEY
+  NEW_RELIC_APP_NAME: metrics
+  NEW_RELIC_MONITOR_MODE: "true"
+  NEW_RELIC_LOG: stderr
+  NEW_RELIC_LOG_LEVEL: warning

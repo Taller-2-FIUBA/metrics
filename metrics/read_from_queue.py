@@ -4,6 +4,10 @@ from json import loads
 
 import click
 from redis import BlockingConnectionPool, Redis
+from newrelic.agent import (
+    record_custom_metric as record_metric,
+    register_application,
+)
 
 import metrics.constants as c
 from metrics.mongodb import get_connection, get_url, add
@@ -13,6 +17,8 @@ logging.basicConfig(
     level=c.CONFIGURATION.log_level.upper(),
     format="%(message)s"
 )
+NR_APP = register_application()
+COUNTER = {"count": 1}
 
 
 @click.command()
@@ -33,6 +39,7 @@ def read(read_one: bool):
     should_read_more = True
     while should_read_more:
         logging.debug("Reading metric from Reddis...")
+        record_metric('Custom/read-messages', COUNTER, NR_APP)
         message = client.blpop("metrics")
         logging.info("Read message %s", message)
         try:
