@@ -3,3 +3,4 @@ environ-config
 pymongo[srv]
 redis[hiredis]
 click
+newrelic

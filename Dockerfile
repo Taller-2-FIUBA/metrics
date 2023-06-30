@@ -9,4 +9,13 @@ RUN pip install -e .
 
 WORKDIR /user/src/metrics/metrics
 
-ENTRYPOINT [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port=8005", "--reload" ]
+ENTRYPOINT [\
+    "newrelic-admin",\
+    "run-program",\
+    "uvicorn",\
+    "main:app",\
+    "--host",\
+    "0.0.0.0",\
+    "--port=8005",\
+    "--reload"\
+]
